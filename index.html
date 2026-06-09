@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Rank & Rent Niche Finder | Mission Control</title>
+    <title>Rank & Rent Niches | Mission Control</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-primary: #050508;
@@ -28,7 +28,8 @@
             --danger-dim: rgba(255, 68, 68, 0.15);
             --gradient-start: #00d4ff;
             --gradient-end: #7b2ff7;
-            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
         }
 
@@ -102,6 +103,7 @@
         }
 
         .logo-text {
+            font-family: var(--font-display);
             font-size: 22px;
             font-weight: 700;
             letter-spacing: -0.5px;
@@ -255,67 +257,129 @@
             background: linear-gradient(90deg, var(--border), transparent);
         }
 
-        .table-container {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            border-radius: 16px;
-            border: 1px solid var(--border);
+        .niche-card {
             background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
         }
 
-        .table-container::-webkit-scrollbar { height: 6px; }
-        .table-container::-webkit-scrollbar-track { background: var(--bg-primary); }
-        .table-container::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 700px;
+        .niche-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
 
-        th {
-            padding: 16px;
-            text-align: left;
+        .niche-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 212, 255, 0.1);
+        }
+
+        .niche-card:hover::before { opacity: 0.5; }
+
+        .card-header {
+            padding: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .card-header-left { flex: 1; min-width: 0; }
+
+        .niche-keyword {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--accent);
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .card-title {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            line-height: 1.3;
+            letter-spacing: -0.3px;
+        }
+
+        .card-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 8px;
             font-size: 11px;
             font-weight: 600;
-            color: var(--text-muted);
+            font-family: var(--font-mono);
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            border-bottom: 1px solid var(--border);
-            cursor: pointer;
+            letter-spacing: 0.5px;
             transition: all 0.3s ease;
-            white-space: nowrap;
         }
 
-        th:hover {
+        .badge-category {
+            background: var(--accent-dim);
             color: var(--accent);
-            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.2);
         }
 
-        td {
-            padding: 16px;
-            border-bottom: 1px solid var(--border);
-            font-size: 14px;
+        .badge-competition-low {
+            background: var(--success-dim);
+            color: var(--success);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .badge-competition-med {
+            background: var(--warning-dim);
+            color: var(--warning);
+            border: 1px solid rgba(255, 170, 0, 0.2);
+        }
+
+        .badge-competition-high {
+            background: var(--danger-dim);
+            color: var(--danger);
+            border: 1px solid rgba(255, 68, 68, 0.2);
+        }
+
+        .badge-volume {
+            background: rgba(255, 255, 255, 0.05);
             color: var(--text-secondary);
-            transition: all 0.3s ease;
-        }
-
-        tr:hover td {
-            background: rgba(255, 255, 255, 0.02);
-            color: var(--text-primary);
+            border: 1px solid var(--border);
         }
 
         .score-ring {
-            width: 40px;
-            height: 40px;
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: var(--font-mono);
-            font-size: 14px;
+            font-size: 18px;
             font-weight: 700;
+            flex-shrink: 0;
             position: relative;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .score-ring::before {
@@ -323,12 +387,18 @@
             position: absolute;
             inset: 0;
             border-radius: 50%;
-            padding: 2px;
+            padding: 3px;
             background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .score-value {
@@ -343,72 +413,62 @@
             z-index: 1;
         }
 
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 600;
-            font-family: var(--font-mono);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .badge-low {
-            background: var(--success-dim);
-            color: var(--success);
-            border: 1px solid rgba(0, 255, 136, 0.2);
-        }
-
-        .badge-medium {
-            background: var(--warning-dim);
-            color: var(--warning);
-            border: 1px solid rgba(255, 170, 0, 0.2);
-        }
-
-        .badge-high {
-            background: var(--danger-dim);
-            color: var(--danger);
-            border: 1px solid rgba(255, 68, 68, 0.2);
-        }
-
-        .value-display {
-            font-family: var(--font-mono);
-            font-weight: 600;
-            color: var(--accent);
-        }
-
-        .expand-btn {
-            width: 28px;
-            height: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            color: var(--text-muted);
-            flex-shrink: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-            cursor: pointer;
-        }
-
-        .expand-btn.rotated { transform: rotate(180deg); }
-
-        .detail-row {
+        .card-body {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), padding 0.5s ease;
         }
 
-        .detail-row.expanded {
-            max-height: 500px;
+        .card-body.expanded {
+            max-height: 2000px;
+            padding: 0 24px 24px;
         }
 
-        .detail-content {
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.02);
+        .card-section { margin-bottom: 24px; }
+
+        .card-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .card-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .card-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .card-list li:last-child { border-bottom: none; }
+
+        .card-list li::before {
+            content: '›';
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .card-list li:hover {
+            color: var(--text-primary);
+            padding-left: 4px;
         }
 
         .action-items {
@@ -471,27 +531,42 @@
 
         .action-item:hover .action-text { color: var(--text-primary); }
 
-        .add-btn {
+        .source-link {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 12px 24px;
-            border-radius: 12px;
-            border: 1px solid var(--accent);
-            background: var(--accent-dim);
             color: var(--accent);
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            margin-top: 10px;
             transition: all 0.3s ease;
-            margin-bottom: 20px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: var(--accent-dim);
+            border: 1px solid rgba(0, 212, 255, 0.2);
         }
 
-        .add-btn:hover {
+        .source-link:hover {
             background: rgba(0, 212, 255, 0.25);
             box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
-            transform: translateY(-2px);
+            transform: translateY(-1px);
         }
+
+        .expand-icon {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            color: var(--text-muted);
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .expand-icon.rotated { transform: rotate(180deg); }
 
         .footer {
             text-align: center;
@@ -519,14 +594,14 @@
             to { opacity: 1; transform: translateX(0); }
         }
 
-        tr {
+        .niche-card {
             animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             opacity: 0;
         }
 
-        tr:nth-child(1) { animation-delay: 0.1s; }
-        tr:nth-child(2) { animation-delay: 0.2s; }
-        tr:nth-child(3) { animation-delay: 0.3s; }
+        .niche-card:nth-child(1) { animation-delay: 0.1s; }
+        .niche-card:nth-child(2) { animation-delay: 0.2s; }
+        .niche-card:nth-child(3) { animation-delay: 0.3s; }
 
         .stat {
             animation: slideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -541,7 +616,17 @@
         @media (max-width: 640px) {
             .header { padding: 16px 20px; }
             .main { padding: 20px; }
+            .card-header { padding: 20px; }
+            .card-title { font-size: 18px; }
+            .score-ring { width: 44px; height: 44px; font-size: 15px; }
             .stat-value { font-size: 20px; }
+        }
+
+        .score-high { animation: glowPulse 2s ease-in-out infinite; }
+
+        @keyframes glowPulse {
+            0%, 100% { text-shadow: 0 0 20px var(--accent-glow); }
+            50% { text-shadow: 0 0 40px var(--accent-glow), 0 0 60px rgba(0, 212, 255, 0.2); }
         }
     </style>
 </head>
@@ -551,26 +636,26 @@
             <div class="logo">
                 <div class="logo-icon">N</div>
                 <div>
-                    <div class="logo-text">Rank & Rent Niche Finder</div>
-                    <div class="subtitle">Weekly Niche Opportunities // v1.0</div>
+                    <div class="logo-text">Rank & Rent Niches</div>
+                    <div class="subtitle">Niche Intelligence // v1.0</div>
                 </div>
             </div>
             <div class="stats-bar">
                 <div class="stat">
-                    <div class="stat-value" id="total-niches">3</div>
-                    <div class="stat-label">Niches</div>
+                    <div class="stat-value" id="total-count">3</div>
+                    <div class="stat-label">Total</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-value" id="high-score-count">2</div>
-                    <div class="stat-label">High Score</div>
+                    <div class="stat-value" id="high-opportunity-count">2</div>
+                    <div class="stat-label">High Opp</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-value" id="low-competition">2</div>
+                    <div class="stat-value" id="low-competition-count">2</div>
                     <div class="stat-label">Low Comp</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-value" id="avg-value">$867</div>
-                    <div class="stat-label">Avg Value</div>
+                    <div class="stat-value" id="avg-score">7.3</div>
+                    <div class="stat-label">Avg Score</div>
                 </div>
             </div>
         </div>
@@ -579,172 +664,227 @@
     <div class="filters">
         <div class="filter-group">
             <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="melbourne">Melbourne</button>
-            <button class="filter-btn" data-filter="sydney">Sydney</button>
-            <button class="filter-btn" data-filter="brisbane">Brisbane</button>
-            <button class="filter-btn" data-filter="low">Low Comp</button>
-            <button class="filter-btn" data-filter="real-estate">Real Estate</button>
+            <button class="filter-btn" data-filter="local-service">Local Service</button>
+            <button class="filter-btn" data-filter="b2b">B2B</button>
+            <button class="filter-btn" data-filter="healthcare">Healthcare</button>
+            <button class="filter-btn" data-filter="home-services">Home Services</button>
+            <button class="filter-btn" data-filter="low-competition">Low Competition</button>
         </div>
     </div>
 
     <main class="main">
-        <button class="add-btn" onclick="alert('Add Niche - Coming Soon')">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 5v14M5 12h14"/>
-            </svg>
-            Add Niche
-        </button>
-
         <div class="section-title">Active Niches</div>
         
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th onclick="sortTable('score')">Score ↕</th>
-                        <th>Niche</th>
-                        <th>City</th>
-                        <th>Category</th>
-                        <th>Competition</th>
-                        <th>Monthly Value</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody id="niches-table">
-                    <tr data-city="melbourne" data-competition="low" data-category="real-estate" data-score="8">
-                        <td>
-                            <div class="score-ring">
-                                <div class="score-value">8</div>
+        <div id="niches-container">
+            <div class="niche-card" data-category="local-service" data-competition="low" data-volume="high" data-score="8">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-header-left">
+                        <div class="niche-keyword">"emergency plumber [city]"</div>
+                        <div class="card-title">Emergency Plumbing</div>
+                        <div class="card-meta">
+                            <span class="badge badge-category">Local Service</span>
+                            <span class="badge badge-competition-low">Low Competition</span>
+                            <span class="badge badge-volume">High Volume</span>
+                        </div>
+                    </div>
+                    <div class="score-ring score-high">
+                        <div class="score-value">8</div>
+                    </div>
+                    <div class="expand-icon">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 6l4 4 4-4"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-section">
+                        <div class="card-section-title">The Opportunity</div>
+                        <div class="card-text">
+                            Emergency plumbing is a high-intent, high-value local service. People searching for "emergency plumber" need help NOW and are willing to pay premium rates. Most plumbers have terrible websites and no SEO.
+                        </div>
+                    </div>
+                    <div class="card-section">
+                        <div class="card-section-title">Market Data</div>
+                        <ul class="card-list">
+                            <li>Search volume: 1,300-5,000/mo per city</li>
+                            <li>Average CPC: $15-25 (high commercial intent)</li>
+                            <li>Lead value: $150-400 per job</li>
+                            <li>Competition: Low (most plumbers neglect SEO)</li>
+                        </ul>
+                    </div>
+                    <div class="card-section">
+                        <div class="card-section-title">Rank & Rent Strategy</div>
+                        <div class="card-text">
+                            Build city-specific emergency plumbing sites. Target "emergency plumber [city]" and "24/7 plumber [city]". Rent to local plumbers for $500-1500/mo or charge per lead ($50-100/lead).
+                        </div>
+                    </div>
+                    <div class="card-section">
+                        <div class="card-section-title">Action Items</div>
+                        <div class="action-items">
+                            <div class="action-item">
+                                <div class="action-checkbox"></div>
+                                <div class="action-text">Research top 10 cities for emergency plumbing volume</div>
                             </div>
-                        </td>
-                        <td><strong>Caravan Parks</strong></td>
-                        <td>Melbourne</td>
-                        <td>Real Estate</td>
-                        <td><span class="badge badge-low">Low</span></td>
-                        <td class="value-display">$1,200</td>
-                        <td>
-                            <div class="expand-btn" onclick="toggleDetail(this)">
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M4 6l4 4 4-4"/>
-                                </svg>
+                            <div class="action-item">
+                                <div class="action-checkbox"></div>
+                                <div class="action-text">Audit competitor sites for gaps</div>
                             </div>
-                        </td>
-                    </tr>
-                    <tr class="detail-row" data-city="melbourne" data-competition="low" data-category="real-estate">
-                        <td colspan="7">
-                            <div class="detail-content">
-                                <div class="section-title" style="margin-bottom: 16px;">Action Items</div>
-                                <div class="action-items">
-                                    <div class="action-item">
-                                        <div class="action-checkbox"></div>
-                                        <div class="action-text">Register domain: caravanparksmelbourne.com.au</div>
-                                    </div>
-                                    <div class="action-item">
-                                        <div class="action-checkbox"></div>
-                                        <div class="action-text">Build comparison site with 10 parks</div>
-                                    </div>
-                                    <div class="action-item">
-                                        <div class="action-checkbox"></div>
-                                        <div class="action-text">Contact 5 parks for partnership</div>
-                                    </div>
-                                </div>
+                            <div class="action-item">
+                                <div class="action-checkbox"></div>
+                                <div class="action-text">Register domains for top 3 cities</div>
                             </div>
-                        </td>
-                    </tr>
-                    <tr data-city="sydney" data-competition="medium" data-category="home-services" data-score="7">
-                        <td>
-                            <div class="score-ring">
-                                <div class="score-value">7</div>
+                            <div class="action-item">
+                                <div class="action-checkbox"></div>
+                                <div class="action-text">Build MVP site with Webflow</div>
                             </div>
-                        </td>
-                        <td><strong>Plumbers</strong></td>
-                        <td>Sydney</td>
-                        <td>Home Services</td>
-                        <td><span class="badge badge-medium">Medium</span></td>
-                        <td class="value-display">$800</td>
-                        <td>
-                            <div class="expand-btn" onclick="toggleDetail(this)">
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M4 6l4 4 4-4"/>
-                                </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="niche-card" data-category="healthcare" data-competition="medium" data-volume="high" data-score="7">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-header-left">
+                        <div class="niche-keyword">"dentist open saturday [city]"</div>
+                        <div class="card-title">Weekend Dental Care</div>
+                        <div class="card-meta">
+                            <span class="badge badge-category">Healthcare</span>
+                            <span class="badge badge-competition-med">Medium Competition</span>
+                            <span class="badge badge-volume">High Volume</span>
+                        </div>
+                    </div>
+                    <div class="score-ring">
+                        <div class="score-value">7</div>
+                    </div>
+                    <div class="expand-icon">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 6l4 4 4-4"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-section">
+                        <div class="card-section-title">The Opportunity</div>
+                        <div class="card-text">
+                            Weekend dental care is underserved. Most dentists close on weekends, but dental emergencies don't wait. High-income patients will pay premium for Saturday/Sunday appointments.
+                        </div>
+                    </div>
+                    <div class="card-section">
+                        <div class="card-section-title">Market Data</div>
+                        <ul class="card-list">
+                            <li>Search volume: 800-2,500/mo per city</li>
+                            <li>Average CPC: $12-20</li>
+                            <li>Lead value: $200-500 per patient</li>
+                            <li>Competition: Medium (some dentists do weekend)</li>
+                        </ul>
+                    </div>
+                    <div class="card-section">
+                        <div class="card-section-title">Rank & Rent Strategy</div>
+                        <div class="card-text">
+                            Build directory of weekend dentists by city. Target "dentist open saturday [city]" and "emergency dentist weekend [city]". Monetize via lead gen or rent to dentists wanting weekend patients.
+                        </div>
+                    </div>
+                    <div class="card-section">
+                        <div class="card-section-title">Action Items</div>
+                        <div class="action-items">
+                            <div class="action-item">
+                                <div class="action-checkbox"></div>
+                                <div class="action-text">Identify cities with weekend dental demand</div>
                             </div>
-                        </td>
-                    </tr>
-                    <tr class="detail-row" data-city="sydney" data-competition="medium" data-category="home-services">
-                        <td colspan="7">
-                            <div class="detail-content">
-                                <div class="section-title" style="margin-bottom: 16px;">Action Items</div>
-                                <div class="action-items">
-                                    <div class="action-item">
-                                        <div class="action-checkbox"></div>
-                                        <div class="action-text">Keyword research: "emergency plumber sydney"</div>
-                                    </div>
-                                    <div class="action-item">
-                                        <div class="action-checkbox"></div>
-                                        <div class="action-text">Build lead gen form with quote request</div>
-                                    </div>
-                                </div>
+                            <div class="action-item">
+                                <div class="action-checkbox"></div>
+                                <div class="action-text">Research weekend dentist availability</div>
                             </div>
-                        </td>
-                    </tr>
-                    <tr data-city="brisbane" data-competition="low" data-category="events" data-score="6">
-                        <td>
-                            <div class="score-ring">
-                                <div class="score-value">6</div>
+                            <div class="action-item">
+                                <div class="action-checkbox"></div>
+                                <div class="action-text">Build directory MVP</div>
                             </div>
-                        </td>
-                        <td><strong>Wedding DJs</strong></td>
-                        <td>Brisbane</td>
-                        <td>Events</td>
-                        <td><span class="badge badge-low">Low</span></td>
-                        <td class="value-display">$600</td>
-                        <td>
-                            <div class="expand-btn" onclick="toggleDetail(this)">
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M4 6l4 4 4-4"/>
-                                </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="niche-card" data-category="home-services" data-competition="low" data-volume="medium" data-score="6">
+                <div class="card-header" onclick="toggleCard(this)">
+                    <div class="card-header-left">
+                        <div class="niche-keyword">"solar panel cleaning [city]"</div>
+                        <div class="card-title">Solar Panel Cleaning</div>
+                        <div class="card-meta">
+                            <span class="badge badge-category">Home Services</span>
+                            <span class="badge badge-competition-low">Low Competition</span>
+                            <span class="badge badge-volume">Medium Volume</span>
+                        </div>
+                    </div>
+                    <div class="score-ring">
+                        <div class="score-value">6</div>
+                    </div>
+                    <div class="expand-icon">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 6l4 4 4-4"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-section">
+                        <div class="card-section-title">The Opportunity</div>
+                        <div class="card-text">
+                            Solar panel cleaning is a growing niche as solar adoption increases. Dirty panels lose 20-30% efficiency. Most solar owners don't know cleaning services exist. Low competition, high growth potential.
+                        </div>
+                    </div>
+                    <div class="card-section">
+                        <div class="card-section-title">Market Data</div>
+                        <ul class="card-list">
+                            <li>Search volume: 300-1,000/mo per city</li>
+                            <li>Average CPC: $8-15</li>
+                            <li>Lead value: $100-300 per job</li>
+                            <li>Competition: Very Low (emerging niche)</li>
+                        </ul>
+                    </div>
+                    <div class="card-section">
+                        <div class="card-section-title">Rank & Rent Strategy</div>
+                        <div class="card-text">
+                            Build city-specific solar cleaning sites. Target "solar panel cleaning [city]" and "solar maintenance [city]". Partner with existing solar installers for referrals. Rent to cleaning services or charge per lead.
+                        </div>
+                    </div>
+                    <div class="card-section">
+                        <div class="card-section-title">Action Items</div>
+                        <div class="action-items">
+                            <div class="action-item">
+                                <div class="action-checkbox"></div>
+                                <div class="action-text">Research solar adoption rates by city</div>
                             </div>
-                        </td>
-                    </tr>
-                    <tr class="detail-row" data-city="brisbane" data-competition="low" data-category="events">
-                        <td colspan="7">
-                            <div class="detail-content">
-                                <div class="section-title" style="margin-bottom: 16px;">Action Items</div>
-                                <div class="action-items">
-                                    <div class="action-item">
-                                        <div class="action-checkbox"></div>
-                                        <div class="action-text">Create DJ comparison/review site</div>
-                                    </div>
-                                    <div class="action-item">
-                                        <div class="action-checkbox"></div>
-                                        <div class="action-text">Partner with 3 wedding venues</div>
-                                    </div>
-                                </div>
+                            <div class="action-item">
+                                <div class="action-checkbox"></div>
+                                <div class="action-text">Identify existing solar cleaning competitors</div>
                             </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                            <div class="action-item">
+                                <div class="action-checkbox"></div>
+                                <div class="action-text">Build MVP with booking functionality</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="footer">
-            <div>Rank & Rent Niche Finder</div>
-            <div style="margin-top: 4px; opacity: 0.6;">Updated weekly with new opportunities</div>
+            <div>Rank & Rent Niches Dashboard</div>
+            <div style="margin-top: 4px; opacity: 0.6;">Updated automatically when new niches are discovered</div>
         </div>
     </main>
 
     <script>
-        function toggleDetail(btn) {
-            const row = btn.closest('tr');
-            const detailRow = row.nextElementSibling;
-            if (detailRow && detailRow.classList.contains('detail-row')) {
-                detailRow.classList.toggle('expanded');
-                btn.classList.toggle('rotated');
-            }
+        function toggleCard(header) {
+            const card = header.parentElement;
+            const body = card.querySelector('.card-body');
+            const icon = header.querySelector('.expand-icon');
+            
+            body.classList.toggle('expanded');
+            icon.classList.toggle('rotated');
         }
 
         const filterBtns = document.querySelectorAll('.filter-btn');
-        const rows = document.querySelectorAll('tbody tr:not(.detail-row)');
+        const cards = document.querySelectorAll('.niche-card');
 
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -753,24 +893,13 @@
 
                 const filter = btn.dataset.filter;
 
-                rows.forEach(row => {
-                    const detailRow = row.nextElementSibling;
-                    let show = true;
-                    
+                cards.forEach(card => {
                     if (filter === 'all') {
-                        show = true;
-                    } else if (filter === 'low') {
-                        show = row.dataset.competition === 'low';
-                    } else if (['melbourne', 'sydney', 'brisbane'].includes(filter)) {
-                        show = row.dataset.city === filter;
+                        card.style.display = 'block';
+                    } else if (filter === 'low-competition') {
+                        card.style.display = card.dataset.competition === 'low' ? 'block' : 'none';
                     } else {
-                        show = row.dataset.category === filter;
-                    }
-
-                    row.style.display = show ? 'table-row' : 'none';
-                    if (detailRow && detailRow.classList.contains('detail-row')) {
-                        detailRow.style.display = show ? 'table-row' : 'none';
-                        if (!show) detailRow.classList.remove('expanded');
+                        card.style.display = card.dataset.category === filter ? 'block' : 'none';
                     }
                 });
 
@@ -779,14 +908,18 @@
         });
 
         function updateStats() {
-            const visibleRows = Array.from(rows).filter(r => r.style.display !== 'none');
-            const total = visibleRows.length;
-            const highScore = visibleRows.filter(r => parseInt(r.dataset.score) >= 7).length;
-            const lowComp = visibleRows.filter(r => r.dataset.competition === 'low').length;
-            
-            document.getElementById('total-niches').textContent = total;
-            document.getElementById('high-score-count').textContent = highScore;
-            document.getElementById('low-competition').textContent = lowComp;
+            const visibleCards = Array.from(cards).filter(c => c.style.display !== 'none');
+            const total = visibleCards.length;
+            const highOpp = visibleCards.filter(c => parseInt(c.dataset.score) >= 7).length;
+            const lowComp = visibleCards.filter(c => c.dataset.competition === 'low').length;
+            const avgScore = total > 0 
+                ? (visibleCards.reduce((sum, c) => sum + parseInt(c.dataset.score), 0) / total).toFixed(1)
+                : '0.0';
+
+            document.getElementById('total-count').textContent = total;
+            document.getElementById('high-opportunity-count').textContent = highOpp;
+            document.getElementById('low-competition-count').textContent = lowComp;
+            document.getElementById('avg-score').textContent = avgScore;
         }
 
         document.querySelectorAll('.action-checkbox').forEach(checkbox => {
@@ -795,33 +928,6 @@
                 this.classList.toggle('checked');
             });
         });
-
-        let sortDirection = 1;
-        function sortTable(column) {
-            const tbody = document.getElementById('niches-table');
-            const allRows = Array.from(tbody.querySelectorAll('tr:not(.detail-row)'));
-            
-            allRows.sort((a, b) => {
-                let valA, valB;
-                
-                if (column === 'score') {
-                    valA = parseInt(a.dataset.score);
-                    valB = parseInt(b.dataset.score);
-                }
-                
-                return (valA - valB) * sortDirection;
-            });
-
-            sortDirection *= -1;
-            
-            allRows.forEach(row => {
-                const detailRow = row.nextElementSibling;
-                tbody.appendChild(row);
-                if (detailRow && detailRow.classList.contains('detail-row')) {
-                    tbody.appendChild(detailRow);
-                }
-            });
-        }
 
         updateStats();
     </script>
